@@ -36,18 +36,24 @@ def generate_side_by_side_html(docx_tokens, web_tokens):
     web_html = ''
 
     for word in diff:
-        if word == '\n':
+        tag = word[:2]
+        token = word[2:]
+
+        if token == '\n':
             docx_html += '<br>\n'
             web_html += '<br>\n'
-        elif word.startswith('  '):
-            docx_html += f'<span style="color:green;">{word[2:]} </span>'
-            web_html += f'<span style="color:green;">{word[2:]} </span>'
-        elif word.startswith('- '):
-            docx_html += f'<span style="background-color: #ff6666;">{word[2:]} </span>'
-        elif word.startswith('+ '):
-            web_html += f'<span style="color:blue;">{word[2:]} </span>'
+        elif tag == '  ':
+            docx_html += f'<span style="color:green;">{token} </span>'
+            web_html += f'<span style="color:green;">{token} </span>'
+        elif tag == '- ':
+            docx_html += f'<span style="background-color: #ffcccc;">{token} </span>'
+            web_html += f'<span style="visibility:hidden;">{token} </span>'
+        elif tag == '+ ':
+            docx_html += f'<span style="visibility:hidden;">{token} </span>'
+            web_html += f'<span style="background-color: #cce5ff;">{token} </span>'
 
     return docx_html, web_html
+
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_files():
