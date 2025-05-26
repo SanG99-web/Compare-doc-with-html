@@ -1,1 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comparison Results</title>
+</head>
+<body>
+    <h1>Comparison Results</h1>
+    <ul>
+        {% for file in files %}
+            <li><a href="{{ url_for('download_result', filename=file) }}" target="_blank">{{ file }}</a></li>
+        {% endfor %}
+    </ul>
+    <br>
+    <a href="{{ url_for('upload_files') }}">← Back to Upload</a>
+</body>
+</html>
 
